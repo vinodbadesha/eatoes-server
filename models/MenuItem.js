@@ -40,8 +40,8 @@ const menuItemSchema = new mongoose.Schema(
 )
 
 menuItemSchema.index({
-    name: text,
-    ingredients: text
+    name: "text",
+    ingredients: "text"
 })
 
 module.exports = mongoose.model("MenuItem", menuItemSchema)
