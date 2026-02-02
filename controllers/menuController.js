@@ -24,6 +24,10 @@ exports.getAllMenuItems = async (request, response) => {
 exports.searchMenuItems = async(request, response) => {
     try{
         const {q} = request.query
+        if (!q || q.trim === ""){
+            const items = await MenuItem.find()
+            response.json(items)
+        }
         const items = await MenuItem.find({
             $text: {$search : q}
         })
