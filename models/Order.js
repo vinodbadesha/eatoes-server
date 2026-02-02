@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema({
             },
             price: {
                 type: Number,
-                reuired: true
+                required: true
             }
         }
     ],
@@ -29,7 +29,7 @@ const orderSchema = new mongoose.Schema({
     },
     status: {
         type: String,
-        enum: ["Pending", "Preparing", "Ready", "Delivered", "Canceled"],
+        enum: ["Pending", "Preparing", "Ready", "Delivered", "Cancelled"],
         default: "Pending"
     },
     customerName: {
@@ -44,7 +44,7 @@ const orderSchema = new mongoose.Schema({
     }
 )
 
-orderSchema.pre("save", function next() {
+orderSchema.pre("save", function (next) {
     if (!this.orderNumber){
         this.orderNumber = "ORDER-" + Date.now()
     }
