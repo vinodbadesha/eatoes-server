@@ -7,6 +7,7 @@ exports.getOrders = async (request, response) => {
 
         if (status) filter.status = status
         const orders = await Order.find(filter)
+        .populate("items.menuItem")
         .skip((page - 1) * limit)
         .limit(Number(limit))
         .sort({createdAt: -1})
@@ -60,11 +61,13 @@ exports.createOrder = async (request, response) => {
 
 exports.updateOrderStatus = async (request, response) => {
     try{
+        const {status} = request.body
         const order = await Order.findByIdAndUpdate(
             request.params.id,
             {status},
             {new: true}
         )
+        response.json(order)
 
         if (!order) {
             return response.status(404).json({message: "Order Not Found"})
